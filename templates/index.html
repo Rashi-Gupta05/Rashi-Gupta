@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Handwritten Digit Recognition</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>✍️ Handwritten Digit Recognition</h1>
+
+      <p class="subtitle">
+        Upload an image containing a handwritten digit from 0 to 9.
+      </p>
+
+      <form action="/predict" method="POST" enctype="multipart/form-data">
+        <div class="upload-box">
+          <label> Select Digit Image </label>
+
+          <input type="file" name="digit_image" accept="image/*" required />
+        </div>
+
+        <button type="submit">Recognize Digit</button>
+      </form>
+
+      {% if prediction is not none %}
+
+      <div class="result">
+        <h2>Prediction Result</h2>
+
+        <div class="digit">{{ prediction }}</div>
+
+        <p>
+          Confidence:
+
+          <strong> {{ confidence }}% </strong>
+        </p>
+      </div>
+
+      {% endif %} {% if error %}
+
+      <div class="error">{{ error }}</div>
+
+      {% endif %}
+
+      <div class="info">
+        <h3>How it works</h3>
+
+        <p>
+          The uploaded image is converted to grayscale, resized to 28 × 28
+          pixels, normalized, and passed to a trained neural network.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
